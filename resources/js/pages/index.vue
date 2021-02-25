@@ -1,4 +1,3 @@
-
 <template>
     <div class="bg-blue-400">
         I am tailwind css
