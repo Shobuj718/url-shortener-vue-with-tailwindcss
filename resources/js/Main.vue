@@ -1,5 +1,6 @@
 <template>
-  <div>I am min component</div>
+  <div class="bg-blue-400">I am misn component</div>
+
 </template>
 
 <script>
