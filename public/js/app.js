@@ -2013,23 +2013,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       original_url: "",
-      errors: {}
+      errors: {},
+      items: []
     };
+  },
+  mounted: function mounted() {
+    this.fetchData();
   },
   methods: {
     submit: function submit() {
       var _this = this;
 
+      if (this.original_url == '') return;
       axios.post('/api/url', {
         original_url: this.original_url
       }).then(function (res) {
         console.log(res);
+        _this.original_url = "";
+
+        _this.items.push(res.data);
       })["catch"](function (e) {
         _this.errors = e.response.data.errors;
+      });
+    },
+    fetchData: function fetchData() {
+      var _this2 = this;
+
+      axios.get('/api/url').then(function (res) {
+        console.log(res.data);
+        _this2.items = res.data;
+      })["catch"](function (e) {
+        _this2.errors = e.response.data;
       });
     }
   }
@@ -37790,8 +37831,25 @@ var render = function() {
       },
       [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.original_url,
+              expression: "original_url"
+            }
+          ],
           staticClass: "p-2 border rounded-md shadow-md w-64",
-          attrs: { type: "text", placeholder: "Past your big url" }
+          attrs: { type: "text", placeholder: "Past your big url" },
+          domProps: { value: _vm.original_url },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.original_url = $event.target.value
+            }
+          }
         }),
         _vm._v(" "),
         _c("i", {
@@ -37801,14 +37859,59 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm.errors.original_url
-      ? _c("span", { staticClass: "text-xs text-red-500" }, [
-          _vm._v(_vm._s(_vm.errors.original_url[0]))
+    _c("div", [
+      _vm.errors.original_url
+        ? _c("span", { staticClass: "text-xs text-red-500" }, [
+            _vm._v(_vm._s(_vm.errors.original_url[0]))
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "mt-5 text-center flex justify-center" }, [
+      _c("div", { staticClass: "border rounded-md p-4" }, [
+        _c("table", [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.items, function(item) {
+              return _c("tr", { key: item.id }, [
+                _c("td", { staticClass: "p-2 rounded border" }, [
+                  _vm._v(_vm._s(item.original_url))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "p-2 rounded border" }, [
+                  _vm._v(_vm._s(item.shorten_url))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "p-2 rounded border" }, [
+                  _vm._v(_vm._s(item.created_at))
+                ])
+              ])
+            }),
+            0
+          )
         ])
-      : _vm._e()
+      ])
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Original URL")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Shorten URL")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Created At")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
