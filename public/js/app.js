@@ -2040,6 +2040,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -43973,15 +43990,42 @@ var render = function() {
             _vm._l(_vm.items, function(item) {
               return _c("tr", { key: item.id }, [
                 _c("td", { staticClass: "p-2 rounded border text-sm" }, [
-                  _vm._v(_vm._s(item.original_url))
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(item.original_url) +
+                      "\n                        "
+                  )
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "p-2 rounded border text-sm" }, [
-                  _vm._v(_vm._s(item.shorten_url))
+                  _c(
+                    "a",
+                    { attrs: { href: item.shorten_url, target: "_blank" } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(item.shorten_url) +
+                          "\n                                "
+                      ),
+                      _c("i", { staticClass: "fas fa-external-link-alt ml-2" })
+                    ]
+                  )
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "p-2 rounded border text-sm" }, [
-                  _vm._v(_vm._s(item.created_at))
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(item.visits) +
+                      "\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "p-2 rounded border text-sm" }, [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(item.created_at) +
+                      "\n                        "
+                  )
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "p-2 rounded border text-sm" }, [
@@ -44014,6 +44058,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Original URL")]),
         _vm._v(" "),
         _c("th", [_vm._v("Shorten URL")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Visits")]),
         _vm._v(" "),
         _c("th", [_vm._v("Created At")]),
         _vm._v(" "),
