@@ -22,13 +22,17 @@
                             <th>Original URL</th>
                             <th>Shorten URL</th>
                             <th>Created At</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr  v-for="item in items" :key="item.id">
-                            <td class="p-2 rounded border">{{ item.original_url }}</td>
-                            <td class="p-2 rounded border">{{ item.shorten_url }}</td>
-                            <td class="p-2 rounded border">{{ item.created_at }}</td>
+                            <td class="p-2 rounded border text-sm">{{ item.original_url }}</td>
+                            <td class="p-2 rounded border text-sm">{{ item.shorten_url }}</td>
+                            <td class="p-2 rounded border text-sm">{{ item.created_at }}</td>
+                            <td class="p-2 rounded border text-sm">
+                                <i @click="destroy(item)" class="fas fa-times text-red-300 hover:text-red-800 cursor-pointer"></i>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -57,19 +61,29 @@
                 axios.post('/api/url', {original_url: this.original_url}).then(res =>{
                     console.log(res);
                     this.original_url = "";
-                    this.items.push(res.data);
+                    this.items.unshift(res.data);
+                    this.$notify({message : "Created Successfully"});
                 }).catch(e => {
                     this.errors = e.response.data.errors;
                 });
             },
             fetchData(){
-            axios.get('/api/url').then(res => {
-                console.log(res.data);
-                this.items = res.data;
-            }).catch(e => {
-                this.errors = e.response.data;
-            });
-        }
+                axios.get('/api/url').then(res => {
+                    console.log(res.data);
+                    this.items = res.data;
+                }).catch(e => {
+                    this.errors = e.response.data;
+                });
+            },
+            destroy(item){
+                if(confirm("Are you sure?")){
+                    axios.delete(`/api/url/${item.shorten_url}`).then(() => {
+                        this.items = this.items.filter(i => i.id != item.id);
+                        this.$notify({message : "Deleted Successfully", type : "warning"});
+                    });
+                    
+                }
+            }
         }
         
     };

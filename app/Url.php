@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Str;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Url extends Model
 {
@@ -20,4 +21,9 @@ class Url extends Model
 	{
 	    return 'shorten_url';
 	}
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->diffForHumans();
+    }
 }
