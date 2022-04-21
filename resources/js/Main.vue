@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-blue-400">I am main component</div>
+  <div class="bg-blue-400 text-white">I am main component</div>
 
 </template>
 
